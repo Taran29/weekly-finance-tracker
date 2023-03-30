@@ -20,12 +20,12 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-bl from-[#DC52BF] to-[#743296] align-middle">
-        <h1 className="absolute top-40 font-sans text-6xl text-white">
-          Welcome!
-        </h1>
         <div className="flex flex-col items-start">
           {!user.isSignedIn && (
             <div className="flex justify-around">
+              <h1 className="absolute top-40 font-sans text-6xl text-white">
+                Welcome!
+              </h1>
               <SignUpButton redirectUrl={env.HOST_URL} mode="modal">
                 <button className="mr-4 aspect-2/1 w-150 rounded-md border border-solid border-white bg-transparent px-5 py-2.5 text-lg text-white transition-all duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black">
                   Sign Up
