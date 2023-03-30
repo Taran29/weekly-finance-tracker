@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { SignIn, SignInButton, SignOutButton, useUser } from '@clerk/nextjs';
+import { SignInButton, SignOutButton, useUser } from '@clerk/nextjs';
 import styles from './index.module.css';
 
 
@@ -11,6 +11,7 @@ const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
   const user = useUser();
+  console.log(user);
   return (
     <>
       <Head>
@@ -21,14 +22,14 @@ const Home: NextPage = () => {
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
       <div className={styles.container}>
         {!user.isSignedIn && 
-            <SignInButton mode="modal">
+            <SignInButton redirectUrl="http://localhost:3000" mode="modal">
               <button className={styles.signInBtn}>Sign In</button>
             </SignInButton>
           
         }
         {!!user.isSignedIn &&
           <>
-            <span className={styles.greetingText}>Hello, {user.user.firstName}! </span>
+            <span className={styles.greetingText}>Hello, {user.user.firstName ? user.user.firstName : user.user.emailAddresses[0]?.emailAddress}! </span>
             <span className={styles.authInfo}>You are signed in with Google</span>
             <SignOutButton>
                 <button className={styles.signInBtn}>Sign Out</button>
