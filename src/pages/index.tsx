@@ -6,6 +6,7 @@ import styles from './index.module.css';
 
 
 import { api } from "~/utils/api";
+import { env } from "process";
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -22,7 +23,7 @@ const Home: NextPage = () => {
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
       <div className={styles.container}>
         {!user.isSignedIn && 
-            <SignInButton redirectUrl="http://localhost:3000" mode="modal">
+            <SignInButton redirectUrl={env.HOST_URL} mode="modal">
               <button className={styles.signInBtn}>Sign In</button>
             </SignInButton>
           
