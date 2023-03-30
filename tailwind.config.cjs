@@ -4,11 +4,11 @@ const config = {
   theme: {
     extend: {
       aspectRatio: {
-        '1/0.5': '1 / 0.5',
+        "2/1": "2/1",
       },
       spacing: {
-        '150': '150px',
-      }
+        150: "150px",
+      },
     },
   },
   plugins: [],
