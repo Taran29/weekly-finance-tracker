@@ -2,7 +2,14 @@
 const config = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      aspectRatio: {
+        '1/0.5': '1 / 0.5',
+      },
+      spacing: {
+        '150': '150px',
+      }
+    },
   },
   plugins: [],
 };
