@@ -9,7 +9,6 @@ import {
   useUser,
 } from "@clerk/nextjs";
 import { env } from "process";
-import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import { useForm, type Resolver } from "react-hook-form";
 
@@ -50,7 +49,6 @@ const Home: NextPage = () => {
     isError: isUsernameUniqueError,
   } = api.profiles.postOne.useMutation();
   const user = useUser();
-  const router = useRouter();
 
   const submitUsernameForm = handleSubmit((data) => {
     mutate({
