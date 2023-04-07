@@ -53,16 +53,11 @@ const Home: NextPage = () => {
   const router = useRouter();
 
   const submitUsernameForm = handleSubmit((data) => {
-    mutate(
-      {
-        firstName: data.firstName,
-        lastName: data.lastName || "",
-        username: data.username,
-      },
-      {
-        onSuccess: void
-      }
-    );
+    mutate({
+      firstName: data.firstName,
+      lastName: data.lastName || "",
+      username: data.username,
+    });
   });
   return (
     <>
