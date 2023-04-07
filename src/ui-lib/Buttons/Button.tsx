@@ -4,7 +4,7 @@ type Props = {
   buttonText: string;
   extraStyles?: string;
   handleClick?: MouseEventHandler;
-  type?: "submit" | "reset" | "button" | undefined;
+  type?: "submit" | "reset" | "button";
 };
 
 const Button: FunctionComponent<Props> = ({
