@@ -60,9 +60,7 @@ const Home: NextPage = () => {
         username: data.username,
       },
       {
-        onSuccess: async () => {
-          await router.push("/profile");
-        },
+        onSuccess: void
       }
     );
   });
