@@ -10,9 +10,8 @@ import {
 } from "@clerk/nextjs";
 import { env } from "process";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { api } from "~/utils/api";
-import { useForm, Resolver } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 
 type FormValues = {
   firstName: string;
@@ -20,7 +19,7 @@ type FormValues = {
   username: string;
 };
 
-const resolver: Resolver<FormValues> = async (values) => {
+const resolver: Resolver<FormValues> = (values) => {
   return {
     values: values.firstName ? values : {},
     errors:
@@ -53,18 +52,16 @@ const Home: NextPage = () => {
   const user = useUser();
   const router = useRouter();
 
-  const [username, setUsername] = useState("");
-
   const submitUsernameForm = handleSubmit((data) => {
-    const result = mutate(
+    mutate(
       {
         firstName: data.firstName,
         lastName: data.lastName || "",
         username: data.username,
       },
       {
-        onSuccess: (data) => {
-          router.push("/profile");
+        onSuccess: async () => {
+          await router.push("/profile");
         },
       }
     );
