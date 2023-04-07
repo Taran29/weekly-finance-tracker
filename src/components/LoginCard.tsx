@@ -94,7 +94,10 @@ const LoginCard: FunctionComponent<Props> = ({ isSignIn }) => {
           {isSignIn && (
             <>
               <div className="my-1 self-end">
-                <Link href="/sign-up" className="text-[#ED9352]">
+                <Link
+                  href="/sign-up"
+                  className="text-[#ED9352] hover:underline"
+                >
                   Forgot Password?
                 </Link>
               </div>
