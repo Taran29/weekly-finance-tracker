@@ -1,7 +1,7 @@
 import type { FunctionComponent, MouseEventHandler } from "react";
 
 type Props = {
-  buttonText: String;
+  buttonText: string;
   extraStyles?: string;
   handleClick?: MouseEventHandler;
   type?: "submit" | "reset" | "button" | undefined;

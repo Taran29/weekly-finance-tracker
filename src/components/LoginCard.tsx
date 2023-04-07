@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -111,7 +111,7 @@ const LoginCard: FunctionComponent<Props> = ({ isSignIn }) => {
           <div className="mt-5 flex items-center justify-center">
             {isSignIn && (
               <>
-                <span>Don't have an account?&nbsp;</span>
+                <span>Don&apos;t have an account?&nbsp;</span>
                 <Link className="text-[#ED9352]" href={"/sign-up"}>
                   Sign Up
                 </Link>
