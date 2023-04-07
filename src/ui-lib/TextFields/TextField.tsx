@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FunctionComponent } from "react";
+import type { ChangeEventHandler, FunctionComponent } from "react";
 
 type Props = {
   placeholder: string;

@@ -18,4 +18,5 @@ model Profile {
   firstName String   @db.VarChar(50)
   lastName  String?  @db.VarChar(50)
   username  String   @unique @db.VarChar(255)
+  email     String?  @unique @db.VarChar(255)
 }

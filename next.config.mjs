@@ -18,5 +18,9 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  env: {
+    HOST_URL: `${process.env.HOST_URL}`,
+  },
+  images: {},
 };
 export default config;

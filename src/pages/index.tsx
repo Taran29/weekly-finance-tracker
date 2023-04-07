@@ -11,7 +11,7 @@ import {
 import { env } from "process";
 import { Button, TextField } from "~/ui-lib";
 import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { api } from "~/utils/api";
 import { useForm, Resolver } from "react-hook-form";
 

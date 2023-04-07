@@ -1,6 +1,4 @@
 import { FunctionComponent } from "react";
-import { SignIn, SignUp } from "@clerk/nextjs";
-import { AiFillGoogleCircle } from "react-icons/ai/";
 import Image from "next/image";
 import Link from "next/link";
 

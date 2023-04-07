@@ -1,9 +1,4 @@
-import {
-  ButtonHTMLAttributes,
-  DetailedHTMLProps,
-  FunctionComponent,
-  MouseEventHandler,
-} from "react";
+import type { FunctionComponent, MouseEventHandler } from "react";
 
 type Props = {
   buttonText: String;

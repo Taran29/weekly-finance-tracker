@@ -1,4 +1,3 @@
-import { SignIn } from "@clerk/nextjs";
 import LoginCard from "~/components/LoginCard";
 
 const Login = () => {
