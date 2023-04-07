@@ -181,7 +181,7 @@ const Home: NextPage = () => {
               </div>
 
               <div className="flex w-full justify-between">
-                <Button buttonText={"Continue"} type="submit" />
+                <Button buttonText={"Continue"} />
 
                 <SignOutButton>
                   <button
