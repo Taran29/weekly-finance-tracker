@@ -9,6 +9,9 @@ const config = {
       spacing: {
         150: "150px",
       },
+      backgroundImage: {
+        "signup-bg": "url('/signup_bg.jpg')",
+      },
     },
   },
   plugins: [],
