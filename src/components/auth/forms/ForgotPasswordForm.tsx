@@ -1,6 +1,6 @@
 import { useSignIn } from "@clerk/nextjs";
-import { ClerkAPIError } from "@clerk/types";
-import { FunctionComponent } from "react";
+import type { ClerkAPIError } from "@clerk/types";
+import type { FunctionComponent } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -21,28 +21,28 @@ const ForgotPasswordForm: FunctionComponent = () => {
   } = useForm<FormValues>();
 
   const forgotPasswordSubmit = void handleSubmit(async (data) => {
-    try {
-      await signIn?.create({
-        strategy: "email_link",
-        identifier: data.email,
-        redirectUrl: `${process.env.NEXT_PUBLIC_HOST_URL}/reset-password`,
-      });
-      toast.success("Email has been sent!");
-    } catch (err: unknown) {
-      if (err && typeof err === "object" && err !== null && "errors" in err) {
-        const errors = err.errors as ClerkAPIError;
-        console.log(errors);
-        if (Array.isArray(errors) && errors[0].code === "session_exists") {
-          toast.error("You are already logged in!");
-          if (process.env && process.env.NEXT_PUBLIC_HOST_URL !== undefined) {
+    if (process.env && process.env.NEXT_PUBLIC_HOST_URL !== undefined) {
+      try {
+        await signIn?.create({
+          strategy: "email_link",
+          identifier: data.email,
+          redirectUrl: `${process.env.NEXT_PUBLIC_HOST_URL}/reset-password`,
+        });
+        toast.success("Email has been sent!");
+      } catch (err: unknown) {
+        if (err && typeof err === "object" && err !== null && "errors" in err) {
+          const errors = err.errors as ClerkAPIError[];
+          console.log(errors);
+          if (errors[0] !== undefined && errors[0].code === "session_exists") {
+            toast.error("You are already logged in!");
             await router.push(`${process.env.NEXT_PUBLIC_HOST_URL}`);
+            return;
           }
-          return;
         }
+        toast.error(
+          "Could not send email. Please make sure the email address exists or try again later"
+        );
       }
-      toast.error(
-        "Could not send email. Please make sure the email address exists or try again later"
-      );
     }
   });
 

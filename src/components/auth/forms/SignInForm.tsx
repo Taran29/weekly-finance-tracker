@@ -1,7 +1,7 @@
-import { FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import { useForm } from "react-hook-form";
 import { useSignIn } from "@clerk/nextjs";
-import { ClerkAPIError } from "@clerk/types";
+import type { ClerkAPIError } from "@clerk/types";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
