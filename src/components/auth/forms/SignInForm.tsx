@@ -21,7 +21,7 @@ const SignInForm: FunctionComponent = () => {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const signInSubmit = void handleSubmit(async (data) => {
+  const signInSubmit = async (data: FormValues) => {
     try {
       const signedInUser = await signIn?.create({
         identifier: data.email,
@@ -48,13 +48,13 @@ const SignInForm: FunctionComponent = () => {
         }
       }
     }
-  });
+  };
 
   return (
     <form
       id="sign-in-form"
       className="flex h-2/3 w-full flex-col"
-      onSubmit={signInSubmit}
+      onSubmit={(...args) => void handleSubmit(signInSubmit)(...args)}
     >
       <div className="my-3 flex flex-col">
         <label className="mb-2 font-semibold">Username or Email</label>
