@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 import { useForm } from "react-hook-form";
 import { useSignIn } from "@clerk/nextjs";
+import { ClerkAPIError } from "@clerk/types";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
@@ -33,10 +34,16 @@ const SignInForm: FunctionComponent = () => {
           router.push(`${process.env.NEXT_PUBLIC_HOST_URL}`);
         }
       }
-    } catch (err: any) {
-      console.log(err.errors);
-      if (err.errors[0].code === "form_password_incorrect") {
-        toast.error(err.errors[0].longMessage);
+    } catch (err: unknown) {
+      if (err && typeof err === "object" && err !== null && "errors" in err) {
+        const errors = err.errors as ClerkAPIError;
+        console.log(errors);
+        if (
+          Array.isArray(errors) &&
+          errors[0].code === "form_password_incorrect"
+        ) {
+          toast.error(errors[0].longMessage);
+        }
       }
     }
   });

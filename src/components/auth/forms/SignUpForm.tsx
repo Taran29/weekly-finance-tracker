@@ -2,7 +2,9 @@ import Link from "next/link";
 import { FunctionComponent } from "react";
 import { useForm } from "react-hook-form";
 import { useSignUp } from "@clerk/nextjs";
+import { ClerkAPIError } from "@clerk/types";
 import { useRouter } from "next/router";
+import { toast } from "react-hot-toast";
 
 type FormValues = {
   username?: string;
@@ -36,9 +38,15 @@ const SignUpForm: FunctionComponent = () => {
       } else {
         console.log(signedUpUser);
       }
-    } catch (err: any) {
-      console.log(err.errors);
-      console.error("error", err.errors[0].longMessage);
+    } catch (err: unknown) {
+      if (err && typeof err === "object" && err !== null && "errors" in err) {
+        const errors = err.errors as ClerkAPIError;
+        console.log(errors);
+        if (Array.isArray(errors) && errors[0].code === "session_exists") {
+          console.log(errors);
+          toast.error(errors[0].longMessage);
+        }
+      }
     }
   });
 

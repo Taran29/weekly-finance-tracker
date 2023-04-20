@@ -1,4 +1,5 @@
 import { useSignIn } from "@clerk/nextjs";
+import { ClerkAPIError } from "@clerk/types";
 import { FunctionComponent } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
@@ -27,12 +28,15 @@ const ForgotPasswordForm: FunctionComponent = () => {
         redirectUrl: `${process.env.NEXT_PUBLIC_HOST_URL}/reset-password`,
       });
       toast.success("Email has been sent!");
-    } catch (err: any) {
-      console.log(err.errors);
-      if (err.errors[0].code === "session_exists") {
-        toast.error("You are already logged in!");
-        router.push(`${process.env.NEXT_PUBLIC_HOST_URL}`);
-        return;
+    } catch (err: unknown) {
+      if (err && typeof err === "object" && err !== null && "errors" in err) {
+        const errors = err.errors as ClerkAPIError;
+        console.log(errors);
+        if (Array.isArray(errors) && errors[0].code === "session_exists") {
+          toast.error("You are already logged in!");
+          router.push(`${process.env.NEXT_PUBLIC_HOST_URL}`);
+          return;
+        }
       }
       toast.error(
         "Could not send email. Please make sure the email address exists or try again later"

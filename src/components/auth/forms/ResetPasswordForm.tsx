@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { type FunctionComponent } from "react";
 import { useUser } from "@clerk/nextjs";
+import { ClerkAPIError } from "@clerk/types";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 
@@ -39,10 +40,13 @@ const ResetPasswordForm: FunctionComponent = () => {
 
       toast.success("Password has been reset successfully!");
       router.push(`${process.env.NEXT_PUBLIC_HOST_URL}`);
-    } catch (err: any) {
-      console.log(err.errors);
-      if (err.errors[0].code === "form_password_pwned") {
-        toast.error("Please choose a more secure password");
+    } catch (err: unknown) {
+      if (err && typeof err === "object" && err !== null && "errors" in err) {
+        const errors = err.errors as ClerkAPIError;
+        console.log(errors);
+        if (Array.isArray(errors) && errors[0].code === "form_password_pwned") {
+          toast.error("Please choose a more secure password");
+        }
       }
     }
   });
