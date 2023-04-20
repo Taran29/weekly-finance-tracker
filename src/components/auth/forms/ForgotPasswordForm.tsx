@@ -20,7 +20,7 @@ const ForgotPasswordForm: FunctionComponent = () => {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const forgotPasswordSubmit = void handleSubmit(async (data) => {
+  const forgotPasswordSubmit = async (data: FormValues) => {
     if (process.env && process.env.NEXT_PUBLIC_HOST_URL !== undefined) {
       try {
         await signIn?.create({
@@ -44,13 +44,13 @@ const ForgotPasswordForm: FunctionComponent = () => {
         );
       }
     }
-  });
+  };
 
   return (
     <form
       id="forgot-password-form"
       className="flex h-2/3 w-full flex-col"
-      onSubmit={forgotPasswordSubmit}
+      onSubmit={(...args) => void handleSubmit(forgotPasswordSubmit)(...args)}
     >
       <div className="my-3 flex flex-col">
         <label className="mb-2 font-semibold">Email</label>

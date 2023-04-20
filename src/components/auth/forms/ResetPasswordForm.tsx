@@ -22,7 +22,7 @@ const ResetPasswordForm: FunctionComponent = () => {
 
   const { user } = useUser();
 
-  const resetPasswordSubmit = void handleSubmit(async (data) => {
+  const resetPasswordSubmit = async (data: FormValues) => {
     if (data.newPassword !== data.confirmPassword) {
       setError("confirmPassword", {
         type: "validate",
@@ -54,13 +54,13 @@ const ResetPasswordForm: FunctionComponent = () => {
         }
       }
     }
-  });
+  };
 
   return (
     <form
       id="reset-password-form"
       className="flex h-2/3 w-full flex-col"
-      onSubmit={resetPasswordSubmit}
+      onSubmit={(...args) => void handleSubmit(resetPasswordSubmit)(...args)}
     >
       <div className="my-3 flex flex-col">
         <label className="mb-2 font-semibold">New Password</label>
