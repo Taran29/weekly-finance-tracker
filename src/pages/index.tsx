@@ -45,13 +45,13 @@ const Home: NextPage = () => {
   const user = useUser();
   const router = useRouter();
 
-  const submitUsernameForm = handleSubmit((data) => {
-    mutate({
-      firstName: data.firstName,
-      lastName: data.lastName || "",
-      username: data.username,
-    });
-  });
+  // const submitUsernameForm = handleSubmit((data) => {
+  //   mutate({
+  //     firstName: data.firstName,
+  //     lastName: data.lastName || "",
+  //     username: data.username,
+  //   });
+  // });
   return (
     <>
       <Head>
@@ -97,11 +97,7 @@ const Home: NextPage = () => {
                 : "Email"}
             </span>
 
-            <form
-              id={"signup-username-form"}
-              className="w-full"
-              onSubmit={submitUsernameForm}
-            >
+            <form id={"signup-username-form"} className="w-full">
               <div className="my-6 flex w-full flex-col justify-start">
                 <label
                   htmlFor={"signup-username-field"}
@@ -173,8 +169,8 @@ const Home: NextPage = () => {
                 </button>
 
                 <SignOutButton
-                  signOutCallback={() => {
-                    router.push("/sign-in");
+                  signOutCallback={async () => {
+                    await router.push("/sign-in");
                   }}
                 >
                   <button
