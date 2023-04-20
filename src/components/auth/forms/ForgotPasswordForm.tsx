@@ -1,7 +1,6 @@
 import { useSignIn } from "@clerk/nextjs";
 import { FunctionComponent } from "react";
 import { useForm } from "react-hook-form";
-import { EmailLinkFactor } from "@clerk/types";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import toast from "react-hot-toast";

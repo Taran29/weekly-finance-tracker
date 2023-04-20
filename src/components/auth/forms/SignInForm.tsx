@@ -12,7 +12,7 @@ type FormValues = {
 
 const SignInForm: FunctionComponent = () => {
   const router = useRouter();
-  const { isLoaded, signIn, setActive, setSession } = useSignIn();
+  const { signIn, setActive } = useSignIn();
 
   const {
     register,

@@ -1,4 +1,3 @@
-import { SignIn, SignUp } from "@clerk/nextjs";
 import { LoginCard } from "~/components";
 
 const ForgotPassword = () => {

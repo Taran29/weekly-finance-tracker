@@ -4,8 +4,6 @@ import { useUser } from "@clerk/nextjs";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 
-type Props = {};
-
 type FormValues = {
   newPassword: string;
   confirmPassword: string;

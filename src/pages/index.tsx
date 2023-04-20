@@ -102,7 +102,11 @@ const Home: NextPage = () => {
                 : "Email"}
             </span>
 
-            <form id={"signup-username-form"} className="w-full">
+            <form
+              id={"signup-username-form"}
+              className="w-full"
+              onSubmit={submitUsernameForm}
+            >
               <div className="my-6 flex w-full flex-col justify-start">
                 <label
                   htmlFor={"signup-username-field"}
