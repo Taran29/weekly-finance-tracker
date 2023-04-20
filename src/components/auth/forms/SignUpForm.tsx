@@ -22,32 +22,36 @@ const SignUpForm: FunctionComponent = () => {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const signUpSubmit = handleSubmit(async (data) => {
-    try {
-      const signedUpUser = await signUp?.create({
-        emailAddress: data.email,
-        password: data.password,
-        username: data.username,
-      });
+  const signUpSubmit = handleSubmit((data) => {
+    const submit = async () => {
+      try {
+        const signedUpUser = await signUp?.create({
+          emailAddress: data.email,
+          password: data.password,
+          username: data.username,
+        });
 
-      if (signedUpUser?.status === "complete") {
-        if (setActive) {
-          setActive({ session: signedUpUser.createdSessionId });
-          router.push(`${process.env.NEXT_PUBLIC_HOST_URL}`);
+        if (signedUpUser?.status === "complete") {
+          if (setActive) {
+            setActive({ session: signedUpUser.createdSessionId });
+            router.push(`${process.env.NEXT_PUBLIC_HOST_URL}`);
+          }
+        } else {
+          console.log(signedUpUser);
         }
-      } else {
-        console.log(signedUpUser);
-      }
-    } catch (err: unknown) {
-      if (err && typeof err === "object" && err !== null && "errors" in err) {
-        const errors = err.errors as ClerkAPIError;
-        console.log(errors);
-        if (Array.isArray(errors) && errors[0].code === "session_exists") {
+      } catch (err: unknown) {
+        if (err && typeof err === "object" && err !== null && "errors" in err) {
+          const errors = err.errors as ClerkAPIError;
           console.log(errors);
-          toast.error(errors[0].longMessage);
+          if (Array.isArray(errors) && errors[0].code === "session_exists") {
+            console.log(errors);
+            toast.error(errors[0].longMessage);
+          }
         }
       }
-    }
+    };
+
+    submit();
   });
 
   return (

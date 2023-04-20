@@ -1,17 +1,10 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import {
-  SignInButton,
-  SignOutButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  useUser,
-} from "@clerk/nextjs";
-import { env } from "process";
+import { SignOutButton, SignedIn, SignedOut, useUser } from "@clerk/nextjs";
 import { api } from "~/utils/api";
 import { useForm, type Resolver } from "react-hook-form";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 type FormValues = {
   firstName: string;
@@ -73,16 +66,18 @@ const Home: NextPage = () => {
               <h1 className="absolute top-40 font-sans text-6xl text-white">
                 Welcome!
               </h1>
-              <SignUpButton redirectUrl={env.HOST_URL} mode="modal">
-                <button className="mr-4 aspect-2/1 w-150 rounded-md border border-solid border-white bg-transparent px-5 py-2.5 text-lg text-white transition-all duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black">
-                  Sign Up
-                </button>
-              </SignUpButton>
-              <SignInButton redirectUrl={env.HOST_URL} mode="modal">
-                <button className="mr-4 aspect-2/1 w-150 rounded-md border border-solid border-white bg-transparent px-5 py-2.5 text-lg text-white transition-all duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black">
-                  Sign In
-                </button>
-              </SignInButton>
+              <Link
+                className="mr-4 flex aspect-2/1 w-150 items-center justify-center rounded-md border border-solid border-white bg-transparent px-5 py-2.5 text-lg text-white transition-all duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black"
+                href="/sign-up"
+              >
+                Sign Up
+              </Link>
+              <Link
+                className="mr-4 flex aspect-2/1 w-150 items-center justify-center rounded-md border border-solid border-white bg-transparent px-5 py-2.5 text-lg text-white transition-all duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black"
+                href="/sign-in"
+              >
+                Sign In
+              </Link>
             </div>
           </SignedOut>
 

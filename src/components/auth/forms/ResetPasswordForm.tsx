@@ -22,36 +22,40 @@ const ResetPasswordForm: FunctionComponent = () => {
 
   const { user } = useUser();
 
-  const resetPasswordSubmit = handleSubmit(async (data) => {
-    if (data.newPassword !== data.confirmPassword) {
-      setError("confirmPassword", {
-        type: "validate",
-        message: "Password and Confirm Password should match",
-      });
-      return;
-    }
+  const resetPasswordSubmit = handleSubmit((data) => {
+    const submit = async () => {
+      if (data.newPassword !== data.confirmPassword) {
+        setError("confirmPassword", {
+          type: "validate",
+          message: "Password and Confirm Password should match",
+        });
+        return;
+      }
 
-    clearErrors("confirmPassword");
+      clearErrors("confirmPassword");
 
-    try {
-      await user?.update({
-        password: data.newPassword,
-      });
+      try {
+        await user?.update({
+          password: data.newPassword,
+        });
 
-      toast.success("Password has been reset successfully!");
-      await router.push(`${process.env.NEXT_PUBLIC_HOST_URL}`);
-    } catch (err: unknown) {
-      if (err && typeof err === "object" && err !== null && "errors" in err) {
-        const errors = err.errors as ClerkAPIError[];
-        console.log(errors);
-        if (
-          errors[0] !== undefined &&
-          errors[0].code === "form_password_pwned"
-        ) {
-          toast.error("Please choose a more secure password");
+        toast.success("Password has been reset successfully!");
+        await router.push(`${process.env.NEXT_PUBLIC_HOST_URL}`);
+      } catch (err: unknown) {
+        if (err && typeof err === "object" && err !== null && "errors" in err) {
+          const errors = err.errors as ClerkAPIError[];
+          console.log(errors);
+          if (
+            errors[0] !== undefined &&
+            errors[0].code === "form_password_pwned"
+          ) {
+            toast.error("Please choose a more secure password");
+          }
         }
       }
-    }
+    };
+
+    submit();
   });
 
   return (

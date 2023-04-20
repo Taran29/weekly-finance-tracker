@@ -21,31 +21,35 @@ const SignInForm: FunctionComponent = () => {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const signInSubmit = handleSubmit(async (data) => {
-    try {
-      const signedInUser = await signIn?.create({
-        identifier: data.email,
-        password: data.password,
-      });
+  const signInSubmit = handleSubmit((data) => {
+    const submit = async () => {
+      try {
+        const signedInUser = await signIn?.create({
+          identifier: data.email,
+          password: data.password,
+        });
 
-      if (signedInUser?.status === "complete") {
-        if (setActive) {
-          setActive({ session: signedInUser.createdSessionId });
-          router.push(`${process.env.NEXT_PUBLIC_HOST_URL}`);
+        if (signedInUser?.status === "complete") {
+          if (setActive) {
+            setActive({ session: signedInUser.createdSessionId });
+            router.push(`${process.env.NEXT_PUBLIC_HOST_URL}`);
+          }
+        }
+      } catch (err: unknown) {
+        if (err && typeof err === "object" && err !== null && "errors" in err) {
+          const errors = err.errors as ClerkAPIError;
+          console.log(errors);
+          if (
+            Array.isArray(errors) &&
+            errors[0].code === "form_password_incorrect"
+          ) {
+            toast.error(errors[0].longMessage);
+          }
         }
       }
-    } catch (err: unknown) {
-      if (err && typeof err === "object" && err !== null && "errors" in err) {
-        const errors = err.errors as ClerkAPIError;
-        console.log(errors);
-        if (
-          Array.isArray(errors) &&
-          errors[0].code === "form_password_incorrect"
-        ) {
-          toast.error(errors[0].longMessage);
-        }
-      }
-    }
+    };
+
+    submit();
   });
 
   return (
