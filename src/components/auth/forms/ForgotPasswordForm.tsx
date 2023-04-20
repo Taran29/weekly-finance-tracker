@@ -12,7 +12,7 @@ type FormValues = {
 
 const ForgotPasswordForm: FunctionComponent = () => {
   const router = useRouter();
-  const { isLoaded, signIn, setActive, setSession } = useSignIn();
+  const { signIn } = useSignIn();
 
   const {
     register,
@@ -20,32 +20,30 @@ const ForgotPasswordForm: FunctionComponent = () => {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const forgotPasswordSubmit = handleSubmit((data) => {
-    const submit = async () => {
-      try {
-        await signIn?.create({
-          strategy: "email_link",
-          identifier: data.email,
-          redirectUrl: `${process.env.NEXT_PUBLIC_HOST_URL}/reset-password`,
-        });
-        toast.success("Email has been sent!");
-      } catch (err: unknown) {
-        if (err && typeof err === "object" && err !== null && "errors" in err) {
-          const errors = err.errors as ClerkAPIError;
-          console.log(errors);
-          if (Array.isArray(errors) && errors[0].code === "session_exists") {
-            toast.error("You are already logged in!");
-            router.push(`${process.env.NEXT_PUBLIC_HOST_URL}`);
-            return;
+  const forgotPasswordSubmit = void handleSubmit(async (data) => {
+    try {
+      await signIn?.create({
+        strategy: "email_link",
+        identifier: data.email,
+        redirectUrl: `${process.env.NEXT_PUBLIC_HOST_URL}/reset-password`,
+      });
+      toast.success("Email has been sent!");
+    } catch (err: unknown) {
+      if (err && typeof err === "object" && err !== null && "errors" in err) {
+        const errors = err.errors as ClerkAPIError;
+        console.log(errors);
+        if (Array.isArray(errors) && errors[0].code === "session_exists") {
+          toast.error("You are already logged in!");
+          if (process.env && process.env.NEXT_PUBLIC_HOST_URL !== undefined) {
+            await router.push(`${process.env.NEXT_PUBLIC_HOST_URL}`);
           }
+          return;
         }
-        toast.error(
-          "Could not send email. Please make sure the email address exists or try again later"
-        );
       }
-    };
-
-    submit();
+      toast.error(
+        "Could not send email. Please make sure the email address exists or try again later"
+      );
+    }
   });
 
   return (

@@ -32,7 +32,7 @@ const SignUpForm: FunctionComponent = () => {
 
       if (signedUpUser?.status === "complete") {
         if (setActive) {
-          setActive({ session: signedUpUser.createdSessionId });
+          await setActive({ session: signedUpUser.createdSessionId });
           if (process.env && process.env.NEXT_PUBLIC_HOST_URL !== undefined) {
             await router.push(`${process.env.NEXT_PUBLIC_HOST_URL}`);
           }
@@ -42,11 +42,11 @@ const SignUpForm: FunctionComponent = () => {
       }
     } catch (err: unknown) {
       if (err && typeof err === "object" && err !== null && "errors" in err) {
-        const errors = err.errors as ClerkAPIError;
+        const errors = err.errors as ClerkAPIError[];
         console.log(errors);
-        if (Array.isArray(errors) && errors[0].code === "session_exists") {
+        if (errors[0] !== undefined && errors[0].code === "session_exists") {
           console.log(errors);
-          toast.error(errors[0].longMessage);
+          toast.error(errors[0].message);
         }
       }
     }
