@@ -11,6 +11,7 @@ import {
 import { env } from "process";
 import { api } from "~/utils/api";
 import { useForm, type Resolver } from "react-hook-form";
+import { useRouter } from "next/router";
 
 type FormValues = {
   firstName: string;
@@ -49,6 +50,7 @@ const Home: NextPage = () => {
     isError: isUsernameUniqueError,
   } = api.profiles.postOne.useMutation();
   const user = useUser();
+  const router = useRouter();
 
   const submitUsernameForm = handleSubmit((data) => {
     mutate({
@@ -171,7 +173,11 @@ const Home: NextPage = () => {
                   Continue
                 </button>
 
-                <SignOutButton>
+                <SignOutButton
+                  signOutCallback={() => {
+                    router.push("/sign-in");
+                  }}
+                >
                   <button
                     type="button"
                     className="aspect-2/1 w-150  rounded-md border border-solid bg-transparent px-5 py-2.5 text-lg text-white transition-all duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black"

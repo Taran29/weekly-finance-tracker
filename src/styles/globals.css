@@ -8,6 +8,7 @@ body {
 
 .test-bg-size {
   background-size: contain;
+  background-repeat: repeat-x;
 }
 
 @media (max-width: 853px) {

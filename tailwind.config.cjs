@@ -10,7 +10,7 @@ const config = {
         150: "150px",
       },
       backgroundImage: {
-        "signup-bg": "url('/signup_bg.jpg')",
+        "signup-bg": "url('/signup.jpg')",
       },
     },
   },
