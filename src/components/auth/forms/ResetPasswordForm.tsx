@@ -39,7 +39,9 @@ const ResetPasswordForm: FunctionComponent = () => {
       });
 
       toast.success("Password has been reset successfully!");
-      await router.push(`${process.env.NEXT_PUBLIC_HOST_URL}`);
+      if (process.env && process.env.NEXT_PUBLIC_HOST_URL !== undefined) {
+        await router.push(`${process.env.NEXT_PUBLIC_HOST_URL}`);
+      }
     } catch (err: unknown) {
       if (err && typeof err === "object" && err !== null && "errors" in err) {
         const errors = err.errors as ClerkAPIError[];
